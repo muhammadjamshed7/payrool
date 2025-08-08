@@ -18,11 +18,13 @@ export interface Employee {
   status: 'Active' | 'On Leave';
 }
 
+export type AttendanceStatus = 'Present' | 'Absent' | 'Paid Leave';
+
 export interface Attendance {
   id: string;
   employeeId: string;
-  date: string;
-  status: 'Present' | 'Absent' | 'Paid Leave';
+  date: string; // YYYY-MM-DD
+  status: AttendanceStatus;
 }
 
 export interface Payroll {

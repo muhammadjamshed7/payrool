@@ -1,4 +1,5 @@
-import type { Employee, Payroll, Expense } from './types';
+import { format } from 'date-fns';
+import type { Employee, Payroll, Expense, Attendance } from './types';
 
 export const employees: Employee[] = [
   { id: 'EMP001', name: 'Ahmed Khan', role: 'Manager', salary: 150000, shift: 'Morning', status: 'Active' },
@@ -32,3 +33,29 @@ export const expenses: Expense[] = [
     { id: 'EXP005', itemName: 'Eid Bonus', type: 'Bonus', amount: 50000, date: '2024-07-20' },
     { id: 'EXP006', itemName: 'Transportation fare for documents', type: 'Petty Cash', amount: 500, date: '2024-07-19' },
 ];
+
+// Generate dummy attendance data for the last 30 days
+const today = new Date();
+const dummyAttendances: Attendance[] = [];
+for (let i = 0; i < 30; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    const dateString = format(date, 'yyyy-MM-dd');
+
+    employees.forEach((employee, index) => {
+        if (employee.status === 'On Leave') {
+            dummyAttendances.push({ id: `ATT${dateString}${employee.id}`, employeeId: employee.id, date: dateString, status: 'Paid Leave' });
+            return;
+        }
+
+        const randomStatus = Math.random();
+        let status: 'Present' | 'Absent' | 'Paid Leave';
+        if (randomStatus < 0.9) { // 90% chance of being present
+            status = 'Present';
+        } else {
+            status = 'Absent';
+        }
+        dummyAttendances.push({ id: `ATT${dateString}${employee.id}`, employeeId: employee.id, date: dateString, status: status });
+    });
+}
+export const attendances: Attendance[] = dummyAttendances;
