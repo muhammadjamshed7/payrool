@@ -8,9 +8,9 @@ interface InvoiceTemplateProps {
 }
 
 const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-PK", {
       style: "currency",
-      currency: "USD",
+      currency: "PKR",
     }).format(amount);
   };
 
@@ -44,7 +44,7 @@ export function InvoiceTemplate({ employee }: InvoiceTemplateProps) {
         <div>
           <Logo />
           <p className="text-sm text-gray-600">123 Business Rd., Suite 100</p>
-          <p className="text-sm text-gray-600">Business City, USA 12345</p>
+          <p className="text-sm text-gray-600">Business City, Pakistan 12345</p>
         </div>
         <div className="text-right">
           <h1 className="text-3xl font-bold text-gray-800">PAYSLIP</h1>

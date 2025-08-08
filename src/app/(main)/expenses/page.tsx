@@ -61,7 +61,7 @@ const CustomInvoiceTemplate = ({ data }: { data: any }) => {
       </section>
       <p className="text-sm mb-4">{data.notes}</p>
       <div className="text-right mt-8">
-        <p className="font-semibold">Total Amount: <span className="text-2xl font-bold">${parseFloat(data.amount).toFixed(2)}</span></p>
+        <p className="font-semibold">Total Amount: <span className="text-2xl font-bold">PKR {parseFloat(data.amount).toFixed(2)}</span></p>
       </div>
        <footer className="mt-12 pt-4 border-t border-gray-300 text-center text-xs text-gray-500">
         <p>Thank you for your business!</p>
@@ -134,7 +134,7 @@ export default function ExpensesPage() {
                 <Input id="customerAddress" name="customerAddress" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="amount">Amount ($)</Label>
+                <Label htmlFor="amount">Amount (PKR)</Label>
                 <Input id="amount" name="amount" type="number" step="0.01" required />
               </div>
               <div className="space-y-2">

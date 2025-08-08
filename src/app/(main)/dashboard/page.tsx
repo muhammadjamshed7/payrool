@@ -26,7 +26,7 @@ export default function DashboardPage() {
       <Separator />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5 mt-6">
         <StatsCard title="Total Employees" value={String(totalEmployees)} icon={Users} />
-        <StatsCard title="Total Payroll (Month)" value={`$${totalPayroll.toLocaleString()}`} icon={DollarSign} description="+20.1% from last month" />
+        <StatsCard title="Total Payroll (Month)" value={`PKR ${totalPayroll.toLocaleString()}`} icon={DollarSign} description="+20.1% from last month" />
         <StatsCard title="Payrolls Generated" value={String(payrolls.length)} icon={FileText} />
         <StatsCard title="Paid Status" value={String(paidPayrolls)} icon={CheckCircle} />
         <StatsCard title="Pending Status" value={String(pendingPayrolls)} icon={Clock} />

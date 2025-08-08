@@ -22,9 +22,9 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { InvoiceDialog } from "./invoice-dialog";
 
 const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("en-PK", {
     style: "currency",
-    currency: "USD",
+    currency: "PKR",
   }).format(amount);
 };
 

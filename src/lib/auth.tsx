@@ -15,10 +15,10 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 const DUMMY_USER: User = {
   id: '1',
-  name: 'Modern User',
+  name: 'Ahmed Khan',
   email: 'modern@gmail.com',
   role: 'Manager',
-  avatar: 'https://i.pravatar.cc/150?u=modern@gmail.com',
+  avatar: 'https://i.pravatar.cc/150?u=ahmedk',
 };
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
