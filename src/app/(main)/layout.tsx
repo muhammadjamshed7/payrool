@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect } from 'react';
@@ -68,7 +69,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
             <Logo />
-            <SidebarTrigger className="ml-auto" />
+            <span className="flex-1"></span>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -107,7 +108,20 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           </div>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset>
+        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+            <SidebarTrigger className="sm:hidden" />
+            <div className="flex-1"></div>
+            <div className="flex items-center gap-2">
+                 <p className="font-semibold text-sm truncate">{user.name}</p>
+                <Avatar className="h-9 w-9">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback><UserIcon /></AvatarFallback>
+                </Avatar>
+            </div>
+        </header>
+        <main className="flex-1">{children}</main>
+      </SidebarInset>
     </SidebarProvider>
   );
 }
