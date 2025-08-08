@@ -88,7 +88,11 @@ export function InvoiceDialog({ open, onOpenChange, employee: initialEmployee }:
                     </ScrollArea>
                     <DialogFooter>
                         <Button variant="outline" onClick={handleClose} disabled={isDownloading}>Close</Button>
-                        <Button onClick={handleDownloadPdf} disabled={isDownloading}>
+                        <Button
+                            onClick={handleDownloadPdf}
+                            disabled={isDownloading}
+                            className="shadow-lg shadow-primary/50 hover:shadow-primary/80 transition-shadow"
+                        >
                             {isDownloading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Download PDF
                         </Button>
