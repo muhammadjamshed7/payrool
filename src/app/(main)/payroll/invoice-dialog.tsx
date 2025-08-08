@@ -13,10 +13,14 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { employees } from "@/lib/data"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { InvoiceTemplate } from "./invoice-template"
 import type { Employee } from "@/lib/types"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import jsPDF from "jspdf"
+import html2canvas from "html2canvas"
+import { Loader2 } from "lucide-react"
+
 
 interface InvoiceDialogProps {
     open: boolean;
@@ -27,6 +31,8 @@ interface InvoiceDialogProps {
 export function InvoiceDialog({ open, onOpenChange, employee: initialEmployee }: InvoiceDialogProps) {
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(initialEmployee);
     const [showInvoice, setShowInvoice] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
+    const invoiceRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setSelectedEmployee(initialEmployee);
@@ -46,6 +52,24 @@ export function InvoiceDialog({ open, onOpenChange, employee: initialEmployee }:
         setSelectedEmployee(null);
         onOpenChange(false);
     }
+
+    const handleDownloadPdf = async () => {
+        if (!invoiceRef.current) return;
+        setIsDownloading(true);
+        try {
+            const canvas = await html2canvas(invoiceRef.current, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`invoice-${selectedEmployee?.id}-${Date.now()}.pdf`);
+        } catch (error) {
+            console.error("Error generating PDF", error);
+        } finally {
+            setIsDownloading(false);
+        }
+    }
     
     if (showInvoice && selectedEmployee) {
         return (
@@ -58,11 +82,16 @@ export function InvoiceDialog({ open, onOpenChange, employee: initialEmployee }:
                         </DialogDescription>
                     </DialogHeader>
                     <ScrollArea className="max-h-[70vh] rounded-md border p-4">
-                        <InvoiceTemplate employee={selectedEmployee} />
+                        <div ref={invoiceRef}>
+                           <InvoiceTemplate employee={selectedEmployee} />
+                        </div>
                     </ScrollArea>
                     <DialogFooter>
-                        <Button variant="outline" onClick={handleClose}>Close</Button>
-                        <Button onClick={() => window.print()}>Download PDF</Button>
+                        <Button variant="outline" onClick={handleClose} disabled={isDownloading}>Close</Button>
+                        <Button onClick={handleDownloadPdf} disabled={isDownloading}>
+                            {isDownloading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Download PDF
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

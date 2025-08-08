@@ -24,24 +24,7 @@ export function InvoiceTemplate({ employee }: InvoiceTemplateProps) {
   const netSalary = salary - totalDeductions;
 
   return (
-    <div className="p-2 bg-white text-black font-sans printable-area">
-      <style>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          .printable-area, .printable-area * {
-            visibility: visible;
-          }
-          .printable-area {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            padding: 2rem;
-          }
-        }
-      `}</style>
+    <div className="p-8 bg-white text-black font-sans printable-area">
       <header className="flex items-start justify-between pb-4">
         <div className="flex items-center gap-4">
           <Logo />

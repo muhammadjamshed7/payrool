@@ -1,10 +1,11 @@
+
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { PageHeader } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, FileText } from "lucide-react";
+import { PlusCircle, FileText, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -28,27 +29,14 @@ import { format, subDays } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+
 
 // --- Custom Invoice Components ---
 const CustomInvoiceTemplate = ({ data }: { data: any }) => {
   return (
     <div className="p-8 bg-white text-black font-sans printable-area">
-       <style>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          .printable-area, .printable-area * {
-            visibility: visible;
-          }
-          .printable-area {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-        }
-      `}</style>
       <header className="flex items-center justify-between pb-4">
         <div>
           <h1 className="text-2xl font-bold">{data.companyName || 'Your Company'}</h1>
@@ -85,6 +73,8 @@ const CustomInvoiceTemplate = ({ data }: { data: any }) => {
 const CustomInvoiceDialog = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [invoiceData, setInvoiceData] = useState<any>(null);
+    const [isDownloading, setIsDownloading] = useState(false);
+    const invoiceRef = useRef<HTMLDivElement>(null);
 
     const handleGenerateInvoice = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -94,16 +84,39 @@ const CustomInvoiceDialog = () => {
         setIsDialogOpen(false); // Close form dialog
     };
 
+    const handleDownloadPdf = async () => {
+        if (!invoiceRef.current) return;
+        setIsDownloading(true);
+        try {
+            const canvas = await html2canvas(invoiceRef.current, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`custom-invoice-${Date.now()}.pdf`);
+        } catch (error) {
+            console.error("Error generating PDF", error);
+        } finally {
+            setIsDownloading(false);
+        }
+    }
+
     const handleCloseInvoice = () => setInvoiceData(null);
 
     if (invoiceData) {
         return (
             <Dialog open={true} onOpenChange={handleCloseInvoice}>
                 <DialogContent className="sm:max-w-4xl">
-                    <CustomInvoiceTemplate data={invoiceData} />
+                    <div ref={invoiceRef}>
+                        <CustomInvoiceTemplate data={invoiceData} />
+                    </div>
                     <DialogFooter>
-                        <Button variant="outline" onClick={handleCloseInvoice}>Close</Button>
-                        <Button onClick={() => window.print()}>Download PDF</Button>
+                        <Button variant="outline" onClick={handleCloseInvoice} disabled={isDownloading}>Close</Button>
+                        <Button onClick={handleDownloadPdf} disabled={isDownloading}>
+                            {isDownloading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Download PDF
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
