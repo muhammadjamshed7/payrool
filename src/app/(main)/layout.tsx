@@ -26,6 +26,7 @@ import {
   LogOut,
   User as UserIcon,
   Loader2,
+  FilePieChart,
 } from 'lucide-react';
 import { Logo } from '@/components/icons/logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -38,6 +39,7 @@ const navItems = [
   { href: '/payroll', icon: FileText, label: 'Payroll' },
   { href: '/suppliers', icon: Truck, label: 'Suppliers' },
   { href: '/expenses', icon: Wallet, label: 'Expenses' },
+  { href: '/reports', icon: FilePieChart, label: 'Reports' },
   { href: '/settings', icon: Settings, label: 'Settings' },
 ];
 
