@@ -44,7 +44,7 @@ export interface Supplier {
   lastPaymentDate: string;
 }
 
-export type ExpenseType = 'General' | 'Salary Advance' | 'Bonus' | 'Supplies';
+export type ExpenseType = 'General' | 'Salary Advance' | 'Bonus' | 'Supplies' | 'Petty Cash';
 
 export interface Expense {
   id: string;

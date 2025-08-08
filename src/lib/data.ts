@@ -1,4 +1,4 @@
-import type { Employee, Payroll } from './types';
+import type { Employee, Payroll, Expense } from './types';
 
 export const employees: Employee[] = [
   { id: 'EMP001', name: 'Ahmed Khan', role: 'Manager', salary: 150000, shift: 'Morning', status: 'Active' },
@@ -22,4 +22,13 @@ export const recentSales = [
     { name: "Hira Khan", email: "hira.khan@example.com", amount: "+PKR 40,000" },
     { name: "Usman Tariq", email: "usman.tariq@example.com", amount: "+PKR 12,000" },
     { name: "Fatima Iqbal", email: "fatima.iqbal@example.com", amount: "+PKR 5,000" },
-]
+];
+
+export const expenses: Expense[] = [
+    { id: 'EXP001', itemName: 'Office Tea & Snacks', type: 'Petty Cash', amount: 2500, date: '2024-07-29' },
+    { id: 'EXP002', itemName: 'Printer Paper Ream', type: 'Supplies', amount: 1500, date: '2024-07-28' },
+    { id: 'EXP003', itemName: 'Advance to Bilal Hassan', type: 'Salary Advance', amount: 10000, date: '2024-07-25', employeeId: 'EMP003' },
+    { id: 'EXP004', itemName: 'Cleaning Supplies', type: 'Petty Cash', amount: 1200, date: '2024-07-22' },
+    { id: 'EXP005', itemName: 'Eid Bonus', type: 'Bonus', amount: 50000, date: '2024-07-20' },
+    { id: 'EXP006', itemName: 'Transportation fare for documents', type: 'Petty Cash', amount: 500, date: '2024-07-19' },
+];
