@@ -50,6 +50,12 @@ export function InvoiceDialog({ open, onOpenChange, employee: initialEmployee }:
         return (
             <Dialog open={showInvoice} onOpenChange={handleClose}>
                 <DialogContent className="sm:max-w-4xl">
+                    <DialogHeader>
+                        <DialogTitle>Salary Invoice</DialogTitle>
+                         <DialogDescription>
+                            Review the invoice details below. You can download it as a PDF.
+                        </DialogDescription>
+                    </DialogHeader>
                     <InvoiceTemplate employee={selectedEmployee} />
                     <DialogFooter>
                         <Button variant="outline" onClick={handleClose}>Close</Button>
