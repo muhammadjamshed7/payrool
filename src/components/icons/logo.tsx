@@ -17,7 +17,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         fontWeight="bold"
         fill="hsl(var(--primary))"
       >
-        ModernPay
+        ModernTextile
       </text>
     </svg>
   );

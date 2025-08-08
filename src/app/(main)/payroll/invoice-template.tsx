@@ -118,7 +118,7 @@ export function InvoiceTemplate({ employee }: InvoiceTemplateProps) {
 
       <footer className="mt-12 pt-4 border-t border-gray-300 text-center text-xs text-gray-500">
         <p>This is a computer-generated document and does not require a signature.</p>
-        <p>ModernPay Inc.</p>
+        <p>ModernTextile Inc.</p>
       </footer>
     </div>
   );

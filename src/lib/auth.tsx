@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem('modernpay_user');
+      const storedUser = localStorage.getItem('moderntextile_user');
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       }
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (email === 'modern@gmail.com' && pass === 'modern12345') {
       setUser(DUMMY_USER);
-      localStorage.setItem('modernpay_user', JSON.stringify(DUMMY_USER));
+      localStorage.setItem('moderntextile_user', JSON.stringify(DUMMY_USER));
       setIsLoading(false);
       return true;
     }
@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('modernpay_user');
+    localStorage.removeItem('moderntextile_user');
     router.push('/login');
   };
 
