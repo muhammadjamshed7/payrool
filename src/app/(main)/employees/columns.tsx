@@ -35,7 +35,7 @@ export const columns: ColumnDef<Employee>[] = [
     header: "Role",
     cell: ({ row }) => {
         const role = row.getValue("role") as string;
-        const variant: "default" | "secondary" | "outline" = role === 'Manager' ? 'default' : role === 'Director' ? 'destructive' : 'secondary';
+        const variant: "default" | "secondary" | "destructive" = role === 'Manager' ? 'default' : role === 'Director' ? 'destructive' : 'secondary';
         return <Badge variant={variant}>{role}</Badge>
     }
   },
