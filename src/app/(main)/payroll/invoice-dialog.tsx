@@ -16,6 +16,7 @@ import { employees } from "@/lib/data"
 import { useState, useEffect } from "react"
 import { InvoiceTemplate } from "./invoice-template"
 import type { Employee } from "@/lib/types"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface InvoiceDialogProps {
     open: boolean;
@@ -56,7 +57,9 @@ export function InvoiceDialog({ open, onOpenChange, employee: initialEmployee }:
                             Review the invoice details below. You can download it as a PDF.
                         </DialogDescription>
                     </DialogHeader>
-                    <InvoiceTemplate employee={selectedEmployee} />
+                    <ScrollArea className="max-h-[70vh] rounded-md border p-4">
+                        <InvoiceTemplate employee={selectedEmployee} />
+                    </ScrollArea>
                     <DialogFooter>
                         <Button variant="outline" onClick={handleClose}>Close</Button>
                         <Button onClick={() => window.print()}>Download PDF</Button>

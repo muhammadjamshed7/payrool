@@ -1,3 +1,4 @@
+
 import { Logo } from "@/components/icons/logo"
 import { Separator } from "@/components/ui/separator"
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -23,7 +24,7 @@ export function InvoiceTemplate({ employee }: InvoiceTemplateProps) {
   const netSalary = salary - totalDeductions;
 
   return (
-    <div className="p-8 bg-white text-black font-sans printable-area">
+    <div className="p-2 bg-white text-black font-sans printable-area">
       <style>{`
         @media print {
           body * {
@@ -37,14 +38,18 @@ export function InvoiceTemplate({ employee }: InvoiceTemplateProps) {
             left: 0;
             top: 0;
             width: 100%;
+            padding: 2rem;
           }
         }
       `}</style>
-      <header className="flex items-center justify-between pb-4">
-        <div>
+      <header className="flex items-start justify-between pb-4">
+        <div className="flex items-center gap-4">
           <Logo />
-          <p className="text-sm text-gray-600">123 Business Rd., Suite 100</p>
-          <p className="text-sm text-gray-600">Business City, Pakistan 12345</p>
+          <div>
+              <h2 className="text-lg font-bold">ModernTextile Inc.</h2>
+              <p className="text-xs text-gray-600">123 Business Rd., Suite 100</p>
+              <p className="text-xs text-gray-600">Business City, Pakistan 12345</p>
+          </div>
         </div>
         <div className="text-right">
           <h1 className="text-3xl font-bold text-gray-800">PAYSLIP</h1>
