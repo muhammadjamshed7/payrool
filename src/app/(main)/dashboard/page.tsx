@@ -1,3 +1,4 @@
+
 import { PageHeader } from "@/components/page-header";
 import { StatsCard } from "@/components/dashboard/stats-card";
 import { PayrollChart } from "@/components/dashboard/payroll-chart";
@@ -11,18 +12,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { payrolls } from "@/lib/data";
 
 export default function DashboardPage() {
+  const paidPayrolls = payrolls.filter(p => p.status === 'Paid').length;
+  const pendingPayrolls = payrolls.filter(p => p.status === 'Pending').length;
+  const totalPayroll = payrolls.reduce((acc, p) => acc + p.netSalary, 0);
+  const totalEmployees = new Set(payrolls.map(p => p.employeeId)).size;
+
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <PageHeader title="Dashboard" />
       <Separator />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5 mt-6">
-        <StatsCard title="Total Employees" value="12" icon={Users} />
-        <StatsCard title="Total Payroll (Month)" value="$15,231.89" icon={DollarSign} description="+20.1% from last month" />
-        <StatsCard title="Payrolls Generated" value="8" icon={FileText} />
-        <StatsCard title="Paid Status" value="6" icon={CheckCircle} />
-        <StatsCard title="Pending Status" value="2" icon={Clock} />
+        <StatsCard title="Total Employees" value={String(totalEmployees)} icon={Users} />
+        <StatsCard title="Total Payroll (Month)" value={`$${totalPayroll.toLocaleString()}`} icon={DollarSign} description="+20.1% from last month" />
+        <StatsCard title="Payrolls Generated" value={String(payrolls.length)} icon={FileText} />
+        <StatsCard title="Paid Status" value={String(paidPayrolls)} icon={CheckCircle} />
+        <StatsCard title="Pending Status" value={String(pendingPayrolls)} icon={Clock} />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">

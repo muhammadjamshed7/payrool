@@ -1,8 +1,9 @@
+
 "use client"
 
 import { useState } from "react";
-import { payrolls as initialPayrolls } from "@/lib/data";
-import type { Payroll } from "@/lib/types";
+import { payrolls as initialPayrolls, employees } from "@/lib/data";
+import type { Payroll, Employee } from "@/lib/types";
 import { PageHeader } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "../employees/data-table"; // Reusing the generic data table
@@ -19,7 +20,6 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { InvoiceDialog } from "./invoice-dialog";
-import { employees } from "@/lib/data";
 
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-US", {
@@ -31,6 +31,20 @@ const formatCurrency = (amount: number) => {
 export default function PayrollPage() {
   const [payrolls, setPayrolls] = useState<Payroll[]>(initialPayrolls);
   const [isInvoiceDialogOpen, setIsInvoiceDialogOpen] = useState(false);
+  const [selectedEmployeeForInvoice, setSelectedEmployeeForInvoice] = useState<Employee | null>(null);
+
+  const handleViewInvoice = (employeeId: string) => {
+    const employee = employees.find(e => e.id === employeeId);
+    if (employee) {
+        setSelectedEmployeeForInvoice(employee);
+        setIsInvoiceDialogOpen(true);
+    }
+  }
+
+  const handleGenerateNewInvoice = () => {
+    setSelectedEmployeeForInvoice(null);
+    setIsInvoiceDialogOpen(true);
+  }
 
   const columns: ColumnDef<Payroll>[] = [
     { accessorKey: "id", header: "Payroll ID" },
@@ -61,6 +75,7 @@ export default function PayrollPage() {
     {
       id: "actions",
       cell: ({ row }) => {
+        const payroll = row.original;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -71,7 +86,7 @@ export default function PayrollPage() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>View Invoice</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleViewInvoice(payroll.employeeId)}>View Invoice</DropdownMenuItem>
               <DropdownMenuItem>Mark as Paid</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive">Void</DropdownMenuItem>
@@ -84,10 +99,14 @@ export default function PayrollPage() {
 
   return (
     <>
-      <InvoiceDialog open={isInvoiceDialogOpen} onOpenChange={setIsInvoiceDialogOpen} />
+      <InvoiceDialog 
+        open={isInvoiceDialogOpen} 
+        onOpenChange={setIsInvoiceDialogOpen}
+        employee={selectedEmployeeForInvoice}
+      />
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
         <PageHeader title="Payroll">
-          <Button onClick={() => setIsInvoiceDialogOpen(true)}>
+          <Button onClick={handleGenerateNewInvoice}>
             <PlusCircle className="mr-2 h-4 w-4" />
             Generate Invoice
           </Button>

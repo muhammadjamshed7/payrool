@@ -1,3 +1,4 @@
+
 "use client"
 
 import {
@@ -12,18 +13,26 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { employees } from "@/lib/data"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { InvoiceTemplate } from "./invoice-template"
 import type { Employee } from "@/lib/types"
 
 interface InvoiceDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    employee: Employee | null;
 }
 
-export function InvoiceDialog({ open, onOpenChange }: InvoiceDialogProps) {
-    const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+export function InvoiceDialog({ open, onOpenChange, employee: initialEmployee }: InvoiceDialogProps) {
+    const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(initialEmployee);
     const [showInvoice, setShowInvoice] = useState(false);
+
+    useEffect(() => {
+        setSelectedEmployee(initialEmployee);
+        if (initialEmployee) {
+            setShowInvoice(true);
+        }
+    }, [initialEmployee, open]);
 
     const handleGenerate = () => {
         if (selectedEmployee) {
@@ -57,7 +66,7 @@ export function InvoiceDialog({ open, onOpenChange }: InvoiceDialogProps) {
                 <DialogHeader>
                     <DialogTitle>Generate Salary Invoice</DialogTitle>
                     <DialogDescription>
-                        Select an employee and month to generate their salary invoice.
+                        Select an employee to generate their salary invoice.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
