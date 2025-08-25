@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { User } from '@/lib/types';
@@ -15,10 +16,10 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 const DUMMY_USER: User = {
   id: '1',
-  name: 'Ahmed Khan',
+  name: 'admin',
   email: 'modern@gmail.com',
   role: 'Manager',
-  avatar: 'https://i.pravatar.cc/150?u=ahmedk',
+  avatar: 'https://i.pravatar.cc/150?u=admin',
 };
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {

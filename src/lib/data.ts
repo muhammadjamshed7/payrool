@@ -1,8 +1,9 @@
+
 import { format } from 'date-fns';
 import type { Employee, Payroll, Expense, Attendance } from './types';
 
 export const employees: Employee[] = [
-  { id: 'EMP001', name: 'Ahmed Khan', role: 'Manager', salary: 150000, shift: 'Morning', status: 'Active' },
+  { id: 'EMP001', name: 'admin', role: 'Manager', salary: 150000, shift: 'Morning', status: 'Active' },
   { id: 'EMP002', name: 'Fatima Ali', role: 'Worker', salary: 60000, shift: 'Evening', status: 'Active' },
   { id: 'EMP003', name: 'Bilal Hassan', role: 'Worker', salary: 65000, shift: 'Morning', status: 'On Leave' },
   { id: 'EMP004', name: 'Ayesha Malik', role: 'Director', salary: 250000, shift: 'Morning', status: 'Active' },
