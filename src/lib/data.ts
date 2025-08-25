@@ -1,6 +1,6 @@
 
 import { format } from 'date-fns';
-import type { Employee, Payroll, Expense, Attendance } from './types';
+import type { Employee, Payroll, Expense, Attendance, Supplier } from './types';
 
 export const employees: Employee[] = [
   { id: 'EMP001', name: 'admin', role: 'Manager', salary: 150000, shift: 'Morning', status: 'Active' },
@@ -60,3 +60,10 @@ for (let i = 0; i < 30; i++) {
     });
 }
 export const attendances: Attendance[] = dummyAttendances;
+
+export const suppliers: Supplier[] = [
+    { id: 'SUP001', name: 'Al-Karam Textiles', fabricType: 'Cotton', qualityTier: 'Premium', contractStatus: 'Active', lastOrderDate: '2024-07-15', totalBusiness: 1250000 },
+    { id: 'SUP002', name: 'Chenab Fabrics', fabricType: 'Blended', qualityTier: 'Mid-Grade', contractStatus: 'Active', lastOrderDate: '2024-06-28', totalBusiness: 850000 },
+    { id: 'SUP003', name: 'Nishat Mills', fabricType: 'Polyester', qualityTier: 'Economy', contractStatus: 'Expired', lastOrderDate: '2024-03-10', totalBusiness: 450000 },
+    { id: 'SUP004', name: 'Sitara Chemicals', fabricType: 'Silk', qualityTier: 'Premium', contractStatus: 'Pending', lastOrderDate: '2024-07-20', totalBusiness: 200000 },
+];

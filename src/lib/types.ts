@@ -39,11 +39,18 @@ export interface Payroll {
   generatedDate: string;
 }
 
+export type FabricType = 'Cotton' | 'Polyester' | 'Silk' | 'Wool' | 'Blended';
+export type QualityTier = 'Premium' | 'Mid-Grade' | 'Economy';
+export type ContractStatus = 'Active' | 'Pending' | 'Expired';
+
 export interface Supplier {
   id: string;
   name: string;
-  amountPaid: number;
-  lastPaymentDate: string;
+  fabricType: FabricType;
+  qualityTier: QualityTier;
+  contractStatus: ContractStatus;
+  lastOrderDate: string;
+  totalBusiness: number;
 }
 
 export type ExpenseType = 'General' | 'Salary Advance' | 'Bonus' | 'Supplies' | 'Petty Cash';
