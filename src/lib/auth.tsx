@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 const DUMMY_USER: User = {
   id: '1',
-  name: 'admin',
+  name: 'awais',
   email: 'modern@gmail.com',
   role: 'Manager',
   avatar: 'https://i.pravatar.cc/150?u=admin',
