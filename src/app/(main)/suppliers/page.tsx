@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 
 const AddSupplierDialog = ({ onAddSupplier }: { onAddSupplier: (supplier: Omit<Supplier, 'id'>) => void }) => {
@@ -53,7 +54,7 @@ const AddSupplierDialog = ({ onAddSupplier }: { onAddSupplier: (supplier: Omit<S
           Add Supplier
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Add New Supplier</DialogTitle>
           <DialogDescription>
@@ -61,62 +62,64 @@ const AddSupplierDialog = ({ onAddSupplier }: { onAddSupplier: (supplier: Omit<S
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Supplier Name</Label>
-              <Input id="name" name="name" required />
+         <ScrollArea className="max-h-[60vh] p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Supplier Name</Label>
+                <Input id="name" name="name" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="fabricType">Fabric Type</Label>
+                <Select name="fabricType" required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select fabric type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Cotton">Cotton</SelectItem>
+                    <SelectItem value="Polyester">Polyester</SelectItem>
+                    <SelectItem value="Silk">Silk</SelectItem>
+                    <SelectItem value="Wool">Wool</SelectItem>
+                    <SelectItem value="Blended">Blended</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="qualityTier">Quality Tier</Label>
+                <Select name="qualityTier" required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select quality tier" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Premium">Premium</SelectItem>
+                    <SelectItem value="Mid-Grade">Mid-Grade</SelectItem>
+                    <SelectItem value="Economy">Economy</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="contractStatus">Contract Status</Label>
+                <Select name="contractStatus" required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select contract status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Active">Active</SelectItem>
+                    <SelectItem value="Pending">Pending</SelectItem>
+                    <SelectItem value="Expired">Expired</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="totalBusiness">Total Business (PKR)</Label>
+                <Input id="totalBusiness" name="totalBusiness" type="number" step="1000" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastOrderDate">Last Order Date</Label>
+                <Input id="lastOrderDate" name="lastOrderDate" type="date" defaultValue={format(new Date(), 'yyyy-MM-dd')} required />
+              </div>
             </div>
-             <div className="space-y-2">
-              <Label htmlFor="fabricType">Fabric Type</Label>
-              <Select name="fabricType" required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select fabric type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Cotton">Cotton</SelectItem>
-                  <SelectItem value="Polyester">Polyester</SelectItem>
-                  <SelectItem value="Silk">Silk</SelectItem>
-                  <SelectItem value="Wool">Wool</SelectItem>
-                  <SelectItem value="Blended">Blended</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="qualityTier">Quality Tier</Label>
-              <Select name="qualityTier" required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select quality tier" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Premium">Premium</SelectItem>
-                  <SelectItem value="Mid-Grade">Mid-Grade</SelectItem>
-                  <SelectItem value="Economy">Economy</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-             <div className="space-y-2">
-              <Label htmlFor="contractStatus">Contract Status</Label>
-              <Select name="contractStatus" required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select contract status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Active">Active</SelectItem>
-                  <SelectItem value="Pending">Pending</SelectItem>
-                  <SelectItem value="Expired">Expired</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-             <div className="space-y-2">
-              <Label htmlFor="totalBusiness">Total Business (PKR)</Label>
-              <Input id="totalBusiness" name="totalBusiness" type="number" step="1000" required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="lastOrderDate">Last Order Date</Label>
-              <Input id="lastOrderDate" name="lastOrderDate" type="date" defaultValue={format(new Date(), 'yyyy-MM-dd')} required />
-            </div>
-          </div>
-          <DialogFooter>
+          </ScrollArea>
+          <DialogFooter className="mt-4">
             <Button variant="outline" type="button" onClick={() => setIsOpen(false)}>Cancel</Button>
             <Button type="submit">Add Supplier</Button>
           </DialogFooter>
